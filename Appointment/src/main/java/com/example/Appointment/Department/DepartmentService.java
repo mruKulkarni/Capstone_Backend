@@ -1,5 +1,7 @@
 package com.example.Appointment.Department;
 
-public class DepartmentService {
+import java.util.Collection;
 
+public interface DepartmentService {
+	Collection<Department> getAllDepartments();
 }

@@ -1,4 +1,4 @@
-package com.example.Appointment.Review;
+package com.example.Appointment.Appointment;
 
 import com.example.Appointment.Doctor.Doctor;
 import com.example.Appointment.User.User;
@@ -11,32 +11,33 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="review")
-public class Review{
+@Table(name="appointment")
+public class Appointment{
+	
 	@Id
 	@GeneratedValue
 	private Integer id;
-	private Integer rating;
-	private String comments;
-	
+	private Integer slot;
+	private String status;
+
 	@OneToOne
     	@JoinColumn(name = "doctorId", referencedColumnName = "id", unique = true)
     	private Doctor doctor;
-
+	
 	@OneToOne
     	@JoinColumn(name = "userId", referencedColumnName = "id", unique = true)
     	private User user;
 
-	public Review() {
+	public Appointment() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Review(Integer id, Integer rating, String comments, Doctor doctor, User user) {
+	public Appointment(Integer id, Integer slot, String status, Doctor doctor, User user) {
 		super();
 		this.id = id;
-		this.rating = rating;
-		this.comments = comments;
+		this.slot = slot;
+		this.status = status;
 		this.doctor = doctor;
 		this.user = user;
 	}
@@ -49,20 +50,20 @@ public class Review{
 		this.id = id;
 	}
 
-	public Integer getRating() {
-		return rating;
+	public Integer getSlot() {
+		return slot;
 	}
 
-	public void setRating(Integer rating) {
-		this.rating = rating;
+	public void setSlot(Integer slot) {
+		this.slot = slot;
 	}
 
-	public String getComments() {
-		return comments;
+	public String getStatus() {
+		return status;
 	}
 
-	public void setComments(String comments) {
-		this.comments = comments;
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	public Doctor getDoctor() {
@@ -80,5 +81,5 @@ public class Review{
 	public void setUser(User user) {
 		this.user = user;
 	}
-	
+
 }

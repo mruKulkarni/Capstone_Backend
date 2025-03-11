@@ -1,5 +1,8 @@
 package com.example.Appointment.Department;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public class DepartmentRepository {
+@Repository
+public interface DepartmentRepository extends JpaRepository<Department, Integer>  {
 
 }
