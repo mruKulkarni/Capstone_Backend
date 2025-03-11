@@ -1,5 +1,7 @@
 package com.example.Appointment.User;
 
-public class UserService {
+public interface UserService {
+
+	User getByEmail(String email);
 
 }
