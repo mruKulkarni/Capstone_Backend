@@ -1,5 +1,7 @@
 package com.example.Appointment.Appointment;
 
-public class AppointmentService {
+import java.util.Map;
 
+public interface AppointmentService {
+	Map<String, Object> getLatestAppointmentByUser(Integer userId);
 }
