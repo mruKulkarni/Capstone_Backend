@@ -3,12 +3,14 @@ package com.example.Appointment.Department;
 import java.util.List;
 
 import com.example.Appointment.Doctor.Doctor;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 
 @Entity
 @Table(name = "department")
@@ -19,7 +21,13 @@ public class Department {
 	private String Name;
 
 	@OneToMany(mappedBy = "department")
+	@JsonManagedReference
 	private List<Doctor> doctors;
+
+	@Transient // Not stored in the database
+	public boolean isHasDoctors() {
+		return doctors != null && !doctors.isEmpty();
+	}
 
 	public Department() {
 		super();
@@ -56,5 +64,5 @@ public class Department {
 	public void setDoctors(List<Doctor> doctors) {
 		this.doctors = doctors;
 	}
-	
+
 }

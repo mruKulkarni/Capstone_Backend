@@ -4,21 +4,25 @@ import java.util.List;
 
 import com.example.Appointment.Department.Department;
 import com.example.Appointment.Review.Review;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="doctor")
+@Table(name = "doctor")
 public class Doctor {
 	@Id
 	@GeneratedValue
 	private Integer id;
+	@Column(unique = true, nullable = false)
+	private String doctorCode;
 	private String name;
 	private String qualification;
 	private Double averageRating;
@@ -26,19 +30,21 @@ public class Doctor {
 	@OneToMany(mappedBy = "doctor")
 	private List<Review> reviews;
 
-	@OneToOne
-    	@JoinColumn(name = "department_id", referencedColumnName = "id", unique = true)
-    	private Department department;
+	@ManyToOne
+	@JoinColumn(name = "department_id", referencedColumnName = "id")
+	@JsonBackReference
+	private Department department;
 
 	public Doctor() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Doctor(Integer id, String name, String qualification, Double averageRating, List<Review> reviews,
-			Department department) {
+	public Doctor(Integer id, String doctorCode, String name, String qualification, Double averageRating,
+			List<Review> reviews, Department department) {
 		super();
 		this.id = id;
+		this.doctorCode = doctorCode;
 		this.name = name;
 		this.qualification = qualification;
 		this.averageRating = averageRating;
@@ -52,6 +58,14 @@ public class Doctor {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public String getDoctorCode() {
+		return doctorCode;
+	}
+
+	public void setDoctorCode(String doctorCode) {
+		this.doctorCode = doctorCode;
 	}
 
 	public String getName() {

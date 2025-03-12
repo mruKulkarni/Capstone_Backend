@@ -1,5 +1,5 @@
 package com.example.Appointment.Doctor;
 
-public class DoctorService {
-
+public interface DoctorService {
+	Doctor addDoctor(DoctorDTO doctorDTO);
 }

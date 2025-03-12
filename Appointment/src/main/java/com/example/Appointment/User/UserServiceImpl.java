@@ -26,6 +26,11 @@ public class UserServiceImpl implements UserService {
 		return userRepository.save(user);
 	}
 
+//	@Override
+//	public User updateUser(User updatedUser) {
+//		return this.userRepository/;
+//	}
+
 	@Override
 	public User getByEmail(String email) {
 		// TODO Auto-generated method stub

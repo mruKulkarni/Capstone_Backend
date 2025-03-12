@@ -28,4 +28,9 @@ public class UserController {
         return userService.createUser(user);
     }
 	  
+	
+//	@PatchMapping("/update/{email}")
+//	public User updateUser(@RequestBody User updatedUser, @PathVariable("email") String email) {
+//		return this.userService.updateUser(updatedUser, email); 
+//	}
 }
