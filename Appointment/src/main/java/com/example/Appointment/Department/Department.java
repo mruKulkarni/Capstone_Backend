@@ -23,7 +23,7 @@ public class Department {
 
 	public Department() {
 		super();
-		// TODO Auto-generated constructor stub
+	
 	}
 
 	public Department(Integer id, String name, List<Doctor> doctors) {

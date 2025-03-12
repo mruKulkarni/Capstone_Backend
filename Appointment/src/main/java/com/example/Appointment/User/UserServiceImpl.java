@@ -11,10 +11,6 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserRepository userRepository;
 
-	@Override
-	public User getByEmail(String email) {
-		return this.userRepository.findByEmail(email);
-	}
 	
 	@Override
 	public User registerUser(UserDTO userDto) {
@@ -29,5 +25,28 @@ public class UserServiceImpl implements UserService {
 		
 		return userRepository.save(user);
 	}
+
+	@Override
+	public User getByEmail(String email) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean emailExists(String email) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean checkCredentials(String email, String password) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	
+	
+
+	
 
 }

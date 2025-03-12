@@ -10,5 +10,7 @@ public interface UserService {
 
 
 	User createUser(@Valid User user);
+	boolean emailExists(String email);
+	boolean checkCredentials(String email, String password);
 
 }
