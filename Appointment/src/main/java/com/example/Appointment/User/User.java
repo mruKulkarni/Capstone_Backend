@@ -5,6 +5,7 @@ import java.util.List;
 import com.example.Appointment.Appointment.Appointment;
 import com.example.Appointment.Review.Review;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -19,6 +20,7 @@ public class User {
 	private Integer id;
 	private String name;
 	private Integer age;
+	@Column(unique = true,nullable = false)
 	private String email;
 	private String phone;
 	private String password;
