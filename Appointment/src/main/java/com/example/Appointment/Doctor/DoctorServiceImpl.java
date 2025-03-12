@@ -1,5 +1,6 @@
 package com.example.Appointment.Doctor;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ public class DoctorServiceImpl implements DoctorService {
 	@Autowired
 	private DepartmentRepository departmentRepository;
 
+	@Override
 	public Doctor addDoctor(DoctorDTO doctorDTO) {
 		// Check if doctor with the same code already exists
 		Optional<Doctor> existingDoctor = doctorRepository.findByDoctorCode(doctorDTO.getDoctorCode());
@@ -36,6 +38,11 @@ public class DoctorServiceImpl implements DoctorService {
 		doctor.setDepartment(department);
 
 		return doctorRepository.save(doctor);
+	}
+
+	@Override
+	public List<Doctor> getDoctorsByDepartmentId(Integer id) {
+		return this.doctorRepository.findDoctorByDepartmentId(id);
 	}
 
 }
