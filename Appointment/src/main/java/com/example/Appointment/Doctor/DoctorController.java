@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/doctors")
 @CrossOrigin("*")
-@CrossOrigin(origins = "http://localhost:4200")
 public class DoctorController {
 	@Autowired
 	private DoctorService doctorService;
