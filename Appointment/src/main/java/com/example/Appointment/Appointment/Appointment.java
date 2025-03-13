@@ -5,6 +5,7 @@ import java.sql.Date;
 import com.example.Appointment.Doctor.Doctor;
 import com.example.Appointment.User.User;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -32,6 +33,8 @@ public class Appointment {
 	@ManyToOne // A user can have multiple appointments
 	@JoinColumn(name = "userId", referencedColumnName = "id")
 	@JsonBackReference
+	@JsonIgnore
+
 	private User user;
 
 	public Appointment() {
