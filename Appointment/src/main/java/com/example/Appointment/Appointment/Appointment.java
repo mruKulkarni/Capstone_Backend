@@ -1,7 +1,10 @@
 package com.example.Appointment.Appointment;
 
+import java.sql.Date;
+
 import com.example.Appointment.Doctor.Doctor;
 import com.example.Appointment.User.User;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -17,15 +20,18 @@ public class Appointment {
 	@Id
 	@GeneratedValue
 	private Integer id;
-	private Integer slot;
+	private String slot;
 	private String status;
+	private Date date;
 
 	@ManyToOne // A doctor can have multiple appointments
 	@JoinColumn(name = "doctorId", referencedColumnName = "id")
+	@JsonBackReference
 	private Doctor doctor;
 
 	@ManyToOne // A user can have multiple appointments
 	@JoinColumn(name = "userId", referencedColumnName = "id")
+	@JsonBackReference
 	private User user;
 
 	public Appointment() {
@@ -33,11 +39,12 @@ public class Appointment {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Appointment(Integer id, Integer slot, String status, Doctor doctor, User user) {
+	public Appointment(Integer id, String slot, String status, Date date, Doctor doctor, User user) {
 		super();
 		this.id = id;
 		this.slot = slot;
 		this.status = status;
+		this.date = date;
 		this.doctor = doctor;
 		this.user = user;
 	}
@@ -50,11 +57,11 @@ public class Appointment {
 		this.id = id;
 	}
 
-	public Integer getSlot() {
+	public String getSlot() {
 		return slot;
 	}
 
-	public void setSlot(Integer slot) {
+	public void setSlot(String slot) {
 		this.slot = slot;
 	}
 
@@ -65,6 +72,14 @@ public class Appointment {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+
+	public String getDate() {
+        return (date != null) ? date.toString() : null; // ✅ Convert SQL Date to String
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
 
 	public Doctor getDoctor() {
 		return doctor;
@@ -81,5 +96,4 @@ public class Appointment {
 	public void setUser(User user) {
 		this.user = user;
 	}
-
 }
