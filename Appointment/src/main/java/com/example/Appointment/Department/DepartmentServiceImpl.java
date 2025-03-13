@@ -16,4 +16,10 @@ public class DepartmentServiceImpl implements DepartmentService {
 		return this.departmentRepository.findAll();
 	}
 
+	@Override
+	public Department addNewDepartment(Department department) {
+		
+		return departmentRepository.save(department);
+	}
+
 }

@@ -20,5 +20,7 @@ public class DoctorController {
 		Doctor savedDoctor = doctorService.addDoctor(doctorDTO);
 		return ResponseEntity.ok(savedDoctor);
 	}
+	
+	
 
 }
