@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.example.Appointment.Appointment.Appointment;
 import com.example.Appointment.Review.Review;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -13,7 +14,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="user")
+@Table(name = "user")
 public class User {
 	@Id
 	@GeneratedValue
@@ -26,11 +27,12 @@ public class User {
 	private String password;
 	private String gender;
 
-	
 	@OneToMany(mappedBy = "user")
+	@JsonManagedReference
 	private List<Review> reviews;
 
 	@OneToMany(mappedBy = "user")
+	@JsonManagedReference
 	private List<Appointment> appointments;
 
 	public User() {
@@ -123,5 +125,5 @@ public class User {
 	public void setAppointments(List<Appointment> appointments) {
 		this.appointments = appointments;
 	}
-	
+
 }

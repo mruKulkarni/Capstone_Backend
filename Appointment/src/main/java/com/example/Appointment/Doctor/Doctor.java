@@ -5,6 +5,7 @@ import java.util.List;
 import com.example.Appointment.Department.Department;
 import com.example.Appointment.Review.Review;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -28,6 +29,7 @@ public class Doctor {
 	private Double averageRating;
 
 	@OneToMany(mappedBy = "doctor")
+	@JsonManagedReference
 	private List<Review> reviews;
 
 	@ManyToOne
