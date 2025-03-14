@@ -23,6 +23,7 @@ public class Department {
 
 	@OneToMany(mappedBy = "department")
 	@JsonIgnore
+	//@JsonManagedReference
 	private List<Doctor> doctors;
 
 	@Transient // Not stored in the database
