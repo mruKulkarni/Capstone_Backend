@@ -175,6 +175,32 @@ public class AppointmentServiceImpl implements AppointmentService {
 				appointment.getDate(), appointment.getSlot(), appointment.getStatus());
 	}
 
+	@Override
+	public List<AppointmentManageDTO> getAllAppointments() {
+	    List<Appointment> appointments = appointmentRepository.findAll(); // Replace with your repository call
+	    List<AppointmentManageDTO> appointmentDTOs = new ArrayList<>();
+	    
+	    for (Appointment appointment : appointments) {
+	        // Assuming Appointment has these properties: doctorId, userName, doctorName, department, date, slot, status
+	        AppointmentManageDTO dto = new AppointmentManageDTO(
+	            appointment.getDoctor().getId(),
+	            appointment.getUser().getName(),
+	            appointment.getDoctor().getName(),
+	            appointment.getDoctor().getDepartment().getName(),
+	            appointment.getDate(),  // You may want to format or adjust the date as needed
+	            appointment.getSlot(),
+	            appointment.getStatus()
+	        );
+	        appointmentDTOs.add(dto);
+	    }
+	    
+	    return appointmentDTOs;
+	}
+
+
+	
+
+
 //	@Override
 //	public List<String> getBookedSlotsForDoctor(int doctorId, Date date) {
 //        return appointmentRepository.findByDoctorIdAndDate(doctorId, date).stream()

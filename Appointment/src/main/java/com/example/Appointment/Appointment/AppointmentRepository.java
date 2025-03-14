@@ -22,4 +22,6 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Intege
 	
 	@Query("SELECT COUNT(a) FROM Appointment a WHERE a.doctor.id = ?1 AND a.date = ?2 AND a.slot = ?3")
 	Long countAppointmentsByDoctorAndSlot(Integer doctorId, Date date, String slot);
+	
+	List<Appointment> findAll();
 }
