@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.example.Appointment.Appointment.Appointment;
 import com.example.Appointment.Review.Review;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
@@ -28,11 +29,11 @@ public class User {
 	private String gender;
 
 	@OneToMany(mappedBy = "user")
-	@JsonManagedReference
+	@JsonIgnore
 	private List<Review> reviews;
 
 	@OneToMany(mappedBy = "user")
-	@JsonManagedReference
+	@JsonIgnore
 	private List<Appointment> appointments;
 
 	public User() {

@@ -3,6 +3,7 @@ package com.example.Appointment.Department;
 import java.util.List;
 
 import com.example.Appointment.Doctor.Doctor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Entity;
@@ -21,7 +22,7 @@ public class Department {
 	private String Name;
 
 	@OneToMany(mappedBy = "department")
-	@JsonManagedReference
+	@JsonIgnore
 	private List<Doctor> doctors;
 
 	@Transient // Not stored in the database
