@@ -22,7 +22,7 @@ public class UserController {
 		return this.userService.getByEmail(email);
 	}
 
-	@PostMapping(value = "/register", consumes = { "application/json", "application/json;charset=UTF-8" })
+	@PostMapping(value = "/register")
 	public User registerUser(@Valid @RequestBody User user) {
 
 		return userService.createUser(user);
@@ -32,7 +32,7 @@ public class UserController {
 //	public User updateUser(@RequestBody User updatedUser, @PathVariable("email") String email) {
 //		return this.userService.updateUser(updatedUser, email); 
 //	}
-	
+
 	@GetMapping("/id")
 	public Integer getUserId(@RequestBody String email) {
 		return this.userService.getUserIdByEmail(email);

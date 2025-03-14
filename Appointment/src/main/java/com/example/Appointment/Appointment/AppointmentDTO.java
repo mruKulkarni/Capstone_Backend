@@ -1,23 +1,31 @@
 package com.example.Appointment.Appointment;
 
-import java.sql.Date;
-
 public class AppointmentDTO {
+	private Integer doctorId;
 	private String userName;
 	private String doctorName;
 	private String department;
-	private Date date; // Keep as Date since it's coming from DB
+	private String date; // Keep as Date since it's coming from DB
 	private String slot;
 	private String status;
 
-	public AppointmentDTO(String userName, String doctorName, String department, Date date, String slot,
-			String status) {
+	public AppointmentDTO(Integer doctorId, String userName, String doctorName, String department, String date,
+			String slot, String status) {
+		this.doctorId = doctorId;
 		this.userName = userName;
 		this.doctorName = doctorName;
 		this.department = department;
 		this.date = date;
 		this.slot = slot;
 		this.status = status;
+	}
+
+	public Integer getDoctorId() {
+		return doctorId;
+	}
+
+	public void setDoctorId(Integer doctorId) {
+		this.doctorId = doctorId;
 	}
 
 	// ✅ Getters & Setters
@@ -45,11 +53,11 @@ public class AppointmentDTO {
 		this.department = department;
 	}
 
-	public Date getDate() {
+	public String getDate() {
 		return date;
 	} // Keep Date type
 
-	public void setDate(Date date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
 
