@@ -14,7 +14,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="user")
+@Table(name = "user")
 public class User {
 	@Id
 	@GeneratedValue
@@ -27,8 +27,8 @@ public class User {
 	private String password;
 	private String gender;
 
-	
 	@OneToMany(mappedBy = "user")
+	@JsonManagedReference
 	private List<Review> reviews;
 
 	@OneToMany(mappedBy = "user")
@@ -125,5 +125,5 @@ public class User {
 	public void setAppointments(List<Appointment> appointments) {
 		this.appointments = appointments;
 	}
-	
+
 }

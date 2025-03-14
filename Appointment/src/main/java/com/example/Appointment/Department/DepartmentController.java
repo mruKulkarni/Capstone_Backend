@@ -15,7 +15,7 @@ import com.example.Appointment.Doctor.Doctor;
 import com.example.Appointment.Doctor.DoctorService;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin("*")
 public class DepartmentController {
 	
 	@Autowired
