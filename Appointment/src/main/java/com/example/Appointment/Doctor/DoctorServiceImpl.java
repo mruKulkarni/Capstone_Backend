@@ -45,4 +45,13 @@ public class DoctorServiceImpl implements DoctorService {
 		return this.doctorRepository.findDoctorByDepartmentId(id);
 	}
 
+	@Override
+	public boolean deleteDoctor(Integer id) {
+		if (doctorRepository.existsById(id)) {
+			doctorRepository.deleteById(id);
+			return true;
+		}
+		return false;
+	}
+
 }

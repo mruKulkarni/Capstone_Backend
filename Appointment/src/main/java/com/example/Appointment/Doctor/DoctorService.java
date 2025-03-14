@@ -6,4 +6,6 @@ public interface DoctorService {
 	Doctor addDoctor(DoctorDTO doctorDTO);
 
 	List<Doctor> getDoctorsByDepartmentId(Integer id);
+
+	boolean deleteDoctor(Integer id);
 }
