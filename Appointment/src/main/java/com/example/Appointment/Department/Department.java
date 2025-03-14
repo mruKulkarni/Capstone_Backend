@@ -21,6 +21,8 @@ public class Department {
 	private String Name;
 
 	@OneToMany(mappedBy = "department")
+	
+	//@JsonManagedReference
 	// @JsonManagedReference
 	@JsonIgnore
 	private List<Doctor> doctors;

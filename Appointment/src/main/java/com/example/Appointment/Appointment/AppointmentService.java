@@ -18,4 +18,8 @@ public interface AppointmentService {
 
 	List<String> getBookedSlots(Integer doctorId, String date);
 	// List<String> getBookedSlotsForDoctor(int doctorId, Date date);
+
+	List<AppointmentManageDTO> getAllAppointments();
+
+	
 }
