@@ -49,9 +49,10 @@ public class UserServiceImpl implements UserService {
 		return false;
 	}
 
-	
-	
-
-	
+	@Override
+	public Integer getUserIdByEmail(String email) {
+		User user = this.userRepository.findByEmail(email);
+		return(user !=null) ? user.getId(): null;
+	}
 
 }
