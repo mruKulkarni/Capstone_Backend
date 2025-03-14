@@ -13,26 +13,26 @@ import jakarta.validation.Valid;
 @RestController
 @CrossOrigin(origins = "*")
 public class UserController {
-	
+
 	@Autowired
 	private UserService userService;
-	
+
 	@GetMapping("/user/{email}")
-	public User getUserByEmail(@PathVariable("email")String email){
+	public User getUserByEmail(@PathVariable("email") String email) {
 		return this.userService.getByEmail(email);
 	}
-	@PostMapping("/register")
-    public User registerUser(@Valid @RequestBody User user) {
-    	
-        return userService.createUser(user);
-    }
-	  
-	
+
+	@PostMapping(value = "/register")
+	public User registerUser(@Valid @RequestBody User user) {
+
+		return userService.createUser(user);
+	}
+
 //	@PatchMapping("/update/{email}")
 //	public User updateUser(@RequestBody User updatedUser, @PathVariable("email") String email) {
 //		return this.userService.updateUser(updatedUser, email); 
 //	}
-	
+
 	@GetMapping("/id")
 	public Integer getUserId(@RequestBody String email) {
 		return this.userService.getUserIdByEmail(email);

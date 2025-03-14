@@ -5,7 +5,6 @@ import java.util.List;
 import com.example.Appointment.Appointment.Appointment;
 import com.example.Appointment.Review.Review;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -22,7 +21,7 @@ public class User {
 	private Integer id;
 	private String name;
 	private Integer age;
-	@Column(unique = true,nullable = false)
+	@Column(unique = true, nullable = false)
 	private String email;
 	private String phone;
 	private String password;

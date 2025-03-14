@@ -7,7 +7,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.example.Appointment.Doctor.Doctor;
 import com.example.Appointment.Doctor.DoctorRepository;
@@ -19,132 +21,159 @@ import com.example.Appointment.User.UserService;
 public class AppointmentServiceImpl implements AppointmentService {
 	@Autowired
 	private AppointmentRepository appointmentRepository;
-	
+
 	@Autowired
 	private DoctorRepository doctorRepository;
-	
+
 	@Autowired
 	private UserRepository userRepository;
-	
+
 	@Autowired
 	private UserService userService;
-	
 
 	@Override
 	public Map<String, Object> getLatestAppointmentByUser(Integer userId) {
-	    Appointment appointment = appointmentRepository.findLatestAppointmentByUser(userId);
+		Appointment appointment = appointmentRepository.findLatestAppointmentByUser(userId);
 
-	    if (appointment == null) {
-	        return null; // No appointment found
-	    }
+		if (appointment == null) {
+			return null; // No appointment found
+		}
 
-	    Map<String, Object> appointmentDetails = new HashMap<>();
-	    appointmentDetails.put("id", appointment.getId());
-	    appointmentDetails.put("slot", appointment.getSlot());
-	    appointmentDetails.put("status", appointment.getStatus());
-	    appointmentDetails.put("date", appointment.getDate());
-	    appointmentDetails.put("doctorId", appointment.getDoctor().getId()); // Get doctor ID
-	    appointmentDetails.put("userId", appointment.getUser().getId()); // Get user ID
+		Map<String, Object> appointmentDetails = new HashMap<>();
+		appointmentDetails.put("id", appointment.getId());
+		appointmentDetails.put("slot", appointment.getSlot());
+		appointmentDetails.put("status", appointment.getStatus());
+		appointmentDetails.put("date", appointment.getDate());
+		appointmentDetails.put("doctorId", appointment.getDoctor().getId()); // Get doctor ID
+		appointmentDetails.put("userId", appointment.getUser().getId()); // Get user ID
 
-	    return appointmentDetails;
+		return appointmentDetails;
 	}
+
+//	@Override
+//	public Map<String, Object> getLatestAppointmentByUser(Integer userId) {
+//		Appointment appointment = appointmentRepository.findTopByUserIdOrderByIdDesc(userId);
+//
+//		if (appointment == null) {
+//			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No appointment found");
+//		}
+//
+//		// Create a response map with appointment details
+//		Map<String, Object> response = new HashMap<>();
+//		response.put("userName", appointment.getUser().getName());
+//		response.put("doctorName", appointment.getDoctor().getName());
+//		response.put("department", appointment.getDoctor().getDepartment().getName());
+//		response.put("date", appointment.getSlot()); // Assuming slot represents date/time
+//		response.put("status", appointment.getStatus());
+//
+//		return response;
+//	}
 
 	@Override
 	public Appointment bookAppointment(AppointmentRequestDTO appointmentRequest) {
-        try {
-            // ✅ Log received request details
-            System.out.println("Received Booking Request: " + appointmentRequest);
+		try {
+			// ✅ Log received request details
+			System.out.println("Received Booking Request: " + appointmentRequest);
 
-            // ✅ Validate Doctor
-            Doctor doctor = doctorRepository.findById(appointmentRequest.getDoctorId())
-                    .orElseThrow(() -> new RuntimeException("Doctor not found with ID: " + appointmentRequest.getDoctorId()));
+			// ✅ Validate Doctor
+			Doctor doctor = doctorRepository.findById(appointmentRequest.getDoctorId()).orElseThrow(
+					() -> new RuntimeException("Doctor not found with ID: " + appointmentRequest.getDoctorId()));
 
-            // ✅ Validate User
-            User user = userRepository.findById(appointmentRequest.getUserId())
-                    .orElseThrow(() -> new RuntimeException("User not found with ID: " + appointmentRequest.getUserId()));
+			// ✅ Validate User
+			User user = userRepository.findById(appointmentRequest.getUserId()).orElseThrow(
+					() -> new RuntimeException("User not found with ID: " + appointmentRequest.getUserId()));
 
-            // ✅ Validate and Convert Date
-            if (appointmentRequest.getDate() == null || appointmentRequest.getDate().trim().isEmpty()) {
-                throw new RuntimeException("Date is missing in request.");
-            }
+			// ✅ Validate and Convert Date
+			if (appointmentRequest.getDate() == null || appointmentRequest.getDate().trim().isEmpty()) {
+				throw new RuntimeException("Date is missing in request.");
+			}
 
-            // ✅ Try parsing the date correctly
-            java.sql.Date appointmentDate;
-            try {
-                appointmentDate = java.sql.Date.valueOf(appointmentRequest.getDate()); // ✅ Convert String to SQL Date
-            } catch (IllegalArgumentException e) {
-                throw new RuntimeException("Invalid date format. Expected format: YYYY-MM-DD");
-            }
+			// ✅ Try parsing the date correctly
+			java.sql.Date appointmentDate;
+			try {
+				appointmentDate = java.sql.Date.valueOf(appointmentRequest.getDate()); // ✅ Convert String to SQL Date
+			} catch (IllegalArgumentException e) {
+				throw new RuntimeException("Invalid date format. Expected format: YYYY-MM-DD");
+			}
 
-            // ✅ Create new appointment
-            Appointment appointment = new Appointment();
-            appointment.setDoctor(doctor);
-            appointment.setUser(user);
-            appointment.setSlot(appointmentRequest.getSlot());
-            appointment.setDate(appointmentDate); // ✅ Store formatted date
-            appointment.setStatus("Booked");
+			// ✅ Create new appointment
+			Appointment appointment = new Appointment();
+			appointment.setDoctor(doctor);
+			appointment.setUser(user);
+			appointment.setSlot(appointmentRequest.getSlot());
+			appointment.setDate(appointmentDate); // ✅ Store formatted date
+			appointment.setStatus("Booked");
 
-            // ✅ Save to database
-            return appointmentRepository.save(appointment);
+			// ✅ Save to database
+			return appointmentRepository.save(appointment);
 
-        } catch (Exception e) {
-            System.err.println("Error Booking Appointment: " + e.getMessage()); // ✅ Log error
-            throw new RuntimeException("Failed to book appointment: " + e.getMessage());
-        }
-    }
+		} catch (Exception e) {
+			System.err.println("Error Booking Appointment: " + e.getMessage()); // ✅ Log error
+			throw new RuntimeException("Failed to book appointment: " + e.getMessage());
+		}
+	}
 
 	@Override
 	public Appointment bookAppointmentWithEmail(String email, AppointmentRequestDTO appointmentRequest) {
-	    Integer userId = userService.getUserIdByEmail(email);
-	    if (userId == null) {
-	        throw new RuntimeException("User not found");
-	    }
+		Integer userId = userService.getUserIdByEmail(email);
+		if (userId == null) {
+			throw new RuntimeException("User not found");
+		}
 
-	    // ✅ Convert String date to SQL Date
-	    Date sqlDate = Date.valueOf(appointmentRequest.getDate());
+		// ✅ Convert String date to SQL Date
+		Date sqlDate = Date.valueOf(appointmentRequest.getDate());
 
-	    // Check if the slot is already booked for the doctor
-	    Long existingAppointments = appointmentRepository.countAppointmentsByDoctorAndSlot(
-	            appointmentRequest.getDoctorId(), 
-	            sqlDate,  // ✅ Pass Date instead of String
-	            appointmentRequest.getSlot()
-	    );
+		// Check if the slot is already booked for the doctor
+		Long existingAppointments = appointmentRepository.countAppointmentsByDoctorAndSlot(
+				appointmentRequest.getDoctorId(), sqlDate, // ✅ Pass Date instead of String
+				appointmentRequest.getSlot());
 
-	    if (existingAppointments > 0) {
-	        throw new RuntimeException("This slot is already booked for the selected doctor.");
-	    }
+		if (existingAppointments > 0) {
+			throw new RuntimeException("This slot is already booked for the selected doctor.");
+		}
 
-	    // Proceed with booking
-	    appointmentRequest.setUserId(userId);
-	    appointmentRequest.setDate(sqlDate.toString()); // Store back as String if needed
-	    return bookAppointment(appointmentRequest);
+		// Proceed with booking
+		appointmentRequest.setUserId(userId);
+		appointmentRequest.setDate(sqlDate.toString()); // Store back as String if needed
+		return bookAppointment(appointmentRequest);
 	}
 
 	@Override
 	public List<Map<String, Object>> getAppointmentsByDoctor(Integer doctorId) {
-	    List<Appointment> appointments = appointmentRepository.findByDoctorId(doctorId);
+		List<Appointment> appointments = appointmentRepository.findByDoctorId(doctorId);
 
-	    List<Map<String, Object>> appointmentList = new ArrayList<>();
-	    for (Appointment appointment : appointments) {
-	        Map<String, Object> appointmentDetails = new HashMap<>();
-	        appointmentDetails.put("id", appointment.getId());
-	        appointmentDetails.put("slot", appointment.getSlot());
-	        appointmentDetails.put("status", appointment.getStatus());
-	        appointmentDetails.put("date", appointment.getDate());
-	        appointmentDetails.put("doctorId", appointment.getDoctor().getId()); // ✅ Fetch doctor ID correctly
-	        appointmentDetails.put("userId", appointment.getUser().getId()); // ✅ Fetch user ID correctly
-	        appointmentList.add(appointmentDetails);
-	    }
-	    return appointmentList;
+		List<Map<String, Object>> appointmentList = new ArrayList<>();
+		for (Appointment appointment : appointments) {
+			Map<String, Object> appointmentDetails = new HashMap<>();
+			appointmentDetails.put("id", appointment.getId());
+			appointmentDetails.put("slot", appointment.getSlot());
+			appointmentDetails.put("status", appointment.getStatus());
+			appointmentDetails.put("date", appointment.getDate());
+			appointmentDetails.put("doctorId", appointment.getDoctor().getId()); // ✅ Fetch doctor ID correctly
+			appointmentDetails.put("userId", appointment.getUser().getId()); // ✅ Fetch user ID correctly
+			appointmentList.add(appointmentDetails);
+		}
+		return appointmentList;
 	}
 
 	@Override
 	public List<String> getBookedSlots(Integer doctorId, String date) {
-	    Date sqlDate = Date.valueOf(date);  // ✅ Convert String to SQL Date
-	    return appointmentRepository.getBookedSlotsForDoctor(doctorId, sqlDate);
+		Date sqlDate = Date.valueOf(date); // ✅ Convert String to SQL Date
+		return appointmentRepository.getBookedSlotsForDoctor(doctorId, sqlDate);
 	}
 
+	@Override
+	public AppointmentDTO getLatestAppointmentByUserDTO(Integer userId) {
+		Appointment appointment = appointmentRepository.findTopByUserIdOrderByIdDesc(userId);
 
+		if (appointment == null) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No appointment found");
+		}
+
+		return new AppointmentDTO(appointment.getDoctor().getId(), appointment.getUser().getName(),
+				appointment.getDoctor().getName(), appointment.getDoctor().getDepartment().getName(),
+				appointment.getDate(), appointment.getSlot(), appointment.getStatus());
+	}
 
 //	@Override
 //	public List<String> getBookedSlotsForDoctor(int doctorId, Date date) {
@@ -152,5 +181,5 @@ public class AppointmentServiceImpl implements AppointmentService {
 //                .map(Appointment::getSlot)
 //                .collect(Collectors.toList());
 //    }
-	
+
 }
