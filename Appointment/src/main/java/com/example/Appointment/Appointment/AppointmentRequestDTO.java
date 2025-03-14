@@ -1,10 +1,13 @@
 package com.example.Appointment.Appointment;
 
+import java.sql.Date;
+
 public class AppointmentRequestDTO {
     private int doctorId;
     private int userId;
     private String slot;
     private String date;
+    private String email;
 
     public int getDoctorId() {
         return doctorId;
@@ -35,8 +38,17 @@ public class AppointmentRequestDTO {
 	}
 
 	public void setDate(String date) {
-		this.date = date;
+		this.date = (date !=null) ? Date.valueOf(date).toString(): null;
 	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 
 	
 }

@@ -11,5 +11,8 @@ public interface UserService {
 	boolean emailExists(String email);
 	boolean checkCredentials(String email, String password);
 //	User updateUser(User updatedUser, String email);
+	
+	public Integer getUserIdByEmail(String email) ;
+	
 
 }
