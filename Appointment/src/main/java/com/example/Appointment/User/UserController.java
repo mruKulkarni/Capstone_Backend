@@ -32,4 +32,9 @@ public class UserController {
 //	public User updateUser(@RequestBody User updatedUser, @PathVariable("email") String email) {
 //		return this.userService.updateUser(updatedUser, email); 
 //	}
+	
+	@GetMapping("/id")
+	public Integer getUserId(@RequestBody String email) {
+		return this.userService.getUserIdByEmail(email);
+	}
 }
