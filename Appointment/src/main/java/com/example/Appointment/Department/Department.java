@@ -3,7 +3,6 @@ package com.example.Appointment.Department;
 import java.util.List;
 
 import com.example.Appointment.Doctor.Doctor;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -21,7 +20,7 @@ public class Department {
 	private String Name;
 
 	@OneToMany(mappedBy = "department")
-	@JsonManagedReference
+	//@JsonManagedReference
 	private List<Doctor> doctors;
 
 	@Transient // Not stored in the database
