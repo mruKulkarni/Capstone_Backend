@@ -10,7 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.Appointment.Appointment.Appointment;
+import com.example.Appointment.Appointment.AppointmentDTO;
+import com.example.Appointment.Appointment.AppointmentService;
 
 @RestController
 @CrossOrigin("*")
@@ -19,9 +20,12 @@ public class ReviewController {
 	@Autowired
 	private ReviewService reviewService;
 
+	@Autowired
+	private AppointmentService appointmentService;
+
 	@GetMapping("/latest-appointment/{userId}")
-	public ResponseEntity<Appointment> getLatestAppointment(@PathVariable Integer userId) {
-		Appointment latestAppointment = reviewService.getLatestAppointment(userId);
+	public ResponseEntity<AppointmentDTO> getLatestAppointment(@PathVariable Integer userId) {
+		AppointmentDTO latestAppointment = appointmentService.getLatestAppointmentByUserDTO(userId);
 		return ResponseEntity.ok(latestAppointment);
 	}
 
