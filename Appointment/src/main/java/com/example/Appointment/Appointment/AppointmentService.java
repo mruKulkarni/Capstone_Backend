@@ -21,5 +21,6 @@ public interface AppointmentService {
 
 	List<AppointmentManageDTO> getAllAppointments();
 
-	
+	List<AppointmentDTO> getUserAppointments(Integer userId);
+
 }

@@ -1,5 +1,6 @@
 package com.example.Appointment.Review;
 
+import com.example.Appointment.Appointment.Appointment;
 import com.example.Appointment.Doctor.Doctor;
 import com.example.Appointment.User.User;
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -9,6 +10,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -29,6 +31,18 @@ public class Review {
 	@JoinColumn(name = "userId", referencedColumnName = "id")
 	@JsonBackReference
 	private User user;
+
+	@OneToOne
+	@JoinColumn(name = "appointment_id", nullable = false, unique = true)
+	private Appointment appointment;
+
+	public Appointment getAppointment() {
+		return appointment;
+	}
+
+	public void setAppointment(Appointment appointment) {
+		this.appointment = appointment;
+	}
 
 	public Review() {
 		super();

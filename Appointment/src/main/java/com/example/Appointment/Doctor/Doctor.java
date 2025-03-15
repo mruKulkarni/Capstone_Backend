@@ -37,6 +37,17 @@ public class Doctor {
 	@JsonBackReference
 	private Department department;
 
+	@Column(name = "is_active")
+	private boolean isActive = true;
+
+	public boolean isActive() {
+		return isActive;
+	}
+
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
+	}
+
 	public Doctor() {
 		super();
 		// TODO Auto-generated constructor stub

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,6 +14,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.example.Appointment.Doctor.Doctor;
 import com.example.Appointment.Doctor.DoctorRepository;
+import com.example.Appointment.Review.ReviewRepository;
 import com.example.Appointment.User.User;
 import com.example.Appointment.User.UserRepository;
 import com.example.Appointment.User.UserService;
@@ -30,6 +32,9 @@ public class AppointmentServiceImpl implements AppointmentService {
 
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	private ReviewRepository reviewRepository;
 
 	@Override
 	public Map<String, Object> getLatestAppointmentByUser(Integer userId) {
@@ -177,29 +182,41 @@ public class AppointmentServiceImpl implements AppointmentService {
 
 	@Override
 	public List<AppointmentManageDTO> getAllAppointments() {
-	    List<Appointment> appointments = appointmentRepository.findAll(); // Replace with your repository call
-	    List<AppointmentManageDTO> appointmentDTOs = new ArrayList<>();
-	    
-	    for (Appointment appointment : appointments) {
-	        // Assuming Appointment has these properties: doctorId, userName, doctorName, department, date, slot, status
-	        AppointmentManageDTO dto = new AppointmentManageDTO(
-	            appointment.getDoctor().getId(),
-	            appointment.getUser().getName(),
-	            appointment.getDoctor().getName(),
-	            appointment.getDoctor().getDepartment().getName(),
-	            appointment.getDate(),  // You may want to format or adjust the date as needed
-	            appointment.getSlot(),
-	            appointment.getStatus()
-	        );
-	        appointmentDTOs.add(dto);
-	    }
-	    
-	    return appointmentDTOs;
+		List<Appointment> appointments = appointmentRepository.findAll(); // Replace with your repository call
+		List<AppointmentManageDTO> appointmentDTOs = new ArrayList<>();
+
+		for (Appointment appointment : appointments) {
+			// Assuming Appointment has these properties: doctorId, userName, doctorName,
+			// department, date, slot, status
+			AppointmentManageDTO dto = new AppointmentManageDTO(appointment.getDoctor().getId(),
+					appointment.getUser().getName(), appointment.getDoctor().getName(),
+					appointment.getDoctor().getDepartment().getName(), appointment.getDate(), // You may want to format
+																								// or adjust the date as
+																								// needed
+					appointment.getSlot(), appointment.getStatus());
+			appointmentDTOs.add(dto);
+		}
+
+		return appointmentDTOs;
 	}
 
+	@Override
+	public List<AppointmentDTO> getUserAppointments(Integer userId) {
+		List<Appointment> appointments = appointmentRepository.findByUserId(userId);
 
-	
+		if (appointments.isEmpty()) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No appointments found");
+		}
 
+		return appointments.stream().map(appointment -> {
+			boolean reviewExists = reviewRepository.existsByAppointmentId(appointment.getId());
+
+			return new AppointmentDTO(appointment.getDoctor().getId(), appointment.getUser().getName(),
+					appointment.getDoctor().getName(), appointment.getDoctor().getDepartment().getName(),
+					appointment.getDate(), appointment.getSlot(), appointment.getStatus(), reviewExists);
+		}).collect(Collectors.toList());
+
+	}
 
 //	@Override
 //	public List<String> getBookedSlotsForDoctor(int doctorId, Date date) {

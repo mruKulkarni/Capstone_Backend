@@ -41,14 +41,18 @@ public class DoctorServiceImpl implements DoctorService {
 	}
 
 	@Override
-	public List<Doctor> getDoctorsByDepartmentId(Integer id) {
-		return this.doctorRepository.findDoctorByDepartmentId(id);
+	public List<Doctor> getDoctorsByDepartmentId(Integer departmentId) {
+		// return this.doctorRepository.findDoctorByDepartmentId(id);
+		return doctorRepository.findDoctorByDepartmentIdAndIsActiveTrue(departmentId);
 	}
 
 	@Override
 	public boolean deleteDoctor(Integer id) {
-		if (doctorRepository.existsById(id)) {
-			doctorRepository.deleteById(id);
+		Optional<Doctor> doctorOptional = doctorRepository.findById(id);
+		if (doctorOptional.isPresent()) {
+			Doctor doctor = doctorOptional.get();
+			doctor.setActive(false); // Soft delete
+			doctorRepository.save(doctor);
 			return true;
 		}
 		return false;
