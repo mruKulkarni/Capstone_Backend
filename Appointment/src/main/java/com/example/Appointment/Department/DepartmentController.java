@@ -44,4 +44,9 @@ public class DepartmentController {
 	public List<Doctor> getDoctorsByDepartment(@PathVariable Integer id){
 		return this.doctorService.getDoctorsByDepartmentId(id);
 	}
+	
+	@GetMapping("/departments/active")
+	public Collection<Department> getDepartmentsWithActiveDoctors() {
+	    return departmentService.getDepartmentsWithActiveDoctors();
+	}
 }
