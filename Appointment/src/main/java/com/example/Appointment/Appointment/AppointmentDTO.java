@@ -8,6 +8,19 @@ public class AppointmentDTO {
 	private String date; // Keep as Date since it's coming from DB
 	private String slot;
 	private String status;
+	private boolean reviewSubmitted;
+
+	public AppointmentDTO(Integer doctorId, String userName, String doctorName, String department, String date,
+			String slot, String status, Boolean reviewSubmitted) {
+		this.doctorId = doctorId;
+		this.userName = userName;
+		this.doctorName = doctorName;
+		this.department = department;
+		this.date = date;
+		this.slot = slot;
+		this.status = status;
+		this.reviewSubmitted = reviewSubmitted;
+	}
 
 	public AppointmentDTO(Integer doctorId, String userName, String doctorName, String department, String date,
 			String slot, String status) {
@@ -19,8 +32,6 @@ public class AppointmentDTO {
 		this.slot = slot;
 		this.status = status;
 	}
-
-	
 
 	public Integer getDoctorId() {
 		return doctorId;
@@ -77,5 +88,13 @@ public class AppointmentDTO {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public boolean isReviewSubmitted() {
+		return reviewSubmitted;
+	}
+
+	public void setReviewSubmitted(boolean reviewSubmitted) {
+		this.reviewSubmitted = reviewSubmitted;
 	}
 }
