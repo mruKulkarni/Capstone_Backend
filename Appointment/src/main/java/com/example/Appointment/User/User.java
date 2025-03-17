@@ -1,5 +1,6 @@
 package com.example.Appointment.User;
 
+import java.time.LocalDate; // Import LocalDate for Date of Birth
 import java.util.List;
 
 import com.example.Appointment.Appointment.Appointment;
@@ -16,114 +17,115 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "user")
 public class User {
-	@Id
-	@GeneratedValue
-	private Integer id;
-	private String name;
-	private Integer age;
-	@Column(unique = true, nullable = false)
-	private String email;
-	private String phone;
-	private String password;
-	private String gender;
+    @Id
+    @GeneratedValue
+    private Integer id;
+    private String name;
 
-	@OneToMany(mappedBy = "user")
-	@JsonIgnore
-	private List<Review> reviews;
+    @Column(name = "date_of_birth") // Column name for the date of birth
+    private LocalDate dateOfBirth; // Changed to LocalDate for Date of Birth
+    
+    @Column(unique = true, nullable = false)
+    private String email;
+    private String phone;
+    private String password;
+    private String gender;
 
-	@OneToMany(mappedBy = "user")
-	@JsonIgnore
-	private List<Appointment> appointments;
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    private List<Review> reviews;
 
-	public User() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    private List<Appointment> appointments;
 
-	public User(Integer id, String name, Integer age, String email, String phone, String password, String gender,
-			List<Review> reviews, List<Appointment> appointments) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.age = age;
-		this.email = email;
-		this.phone = phone;
-		this.password = password;
-		this.gender = gender;
-		this.reviews = reviews;
-		this.appointments = appointments;
-	}
+    public User() {
+        super();
+    }
 
-	public Integer getId() {
-		return id;
-	}
+    public User(Integer id, String name, LocalDate dateOfBirth, String email, String phone, String password, String gender,
+            List<Review> reviews, List<Appointment> appointments) {
+        super();
+        this.id = id;
+        this.name = name;
+        this.dateOfBirth = dateOfBirth;
+        this.email = email;
+        this.phone = phone;
+        this.password = password;
+        this.gender = gender;
+        this.reviews = reviews;
+        this.appointments = appointments;
+    }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public Integer getAge() {
-		return age;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setAge(Integer age) {
-		this.age = age;
-	}
+    public LocalDate getDateOfBirth() {
+        return dateOfBirth; // Getter for dateOfBirth
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public void setDateOfBirth(LocalDate dateOfBirth) {
+        this.dateOfBirth = dateOfBirth; // Setter for dateOfBirth
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public String getPhone() {
-		return phone;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
+    public String getPhone() {
+        return phone;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public String getPassword() {
+        return password;
+    }
 
-	public String getGender() {
-		return gender;
-	}
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-	public void setGender(String gender) {
-		this.gender = gender;
-	}
+    public String getGender() {
+        return gender;
+    }
 
-	public List<Review> getReviews() {
-		return reviews;
-	}
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
 
-	public void setReviews(List<Review> reviews) {
-		this.reviews = reviews;
-	}
+    public List<Review> getReviews() {
+        return reviews;
+    }
 
-	public List<Appointment> getAppointments() {
-		return appointments;
-	}
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
+    }
 
-	public void setAppointments(List<Appointment> appointments) {
-		this.appointments = appointments;
-	}
+    public List<Appointment> getAppointments() {
+        return appointments;
+    }
 
+    public void setAppointments(List<Appointment> appointments) {
+        this.appointments = appointments;
+    }
 }
