@@ -9,4 +9,8 @@ public interface DepartmentService {
 	Department addNewDepartment(Department department);
 
 	Optional<Department> getDepartmentById(int id);
+	
+	Collection<Department> getDepartmentsWithActiveDoctors();
+	
+	
 }
