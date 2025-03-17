@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,6 +14,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.example.Appointment.Doctor.Doctor;
 import com.example.Appointment.Doctor.DoctorRepository;
+import com.example.Appointment.Review.Review;
 import com.example.Appointment.Review.ReviewRepository;
 import com.example.Appointment.User.User;
 import com.example.Appointment.User.UserRepository;
@@ -203,20 +204,45 @@ public class AppointmentServiceImpl implements AppointmentService {
 	@Override
 	public List<AppointmentDTO> getUserAppointments(Integer userId) {
 		List<Appointment> appointments = appointmentRepository.findByUserId(userId);
+		List<AppointmentDTO> appointmentDTOs = new ArrayList<>();
 
-		if (appointments.isEmpty()) {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No appointments found");
+		for (Appointment appointment : appointments) {
+			// Check if a review exists for this appointment
+			Optional<Review> review = reviewRepository.findByAppointmentId(appointment.getId());
+
+			// Create DTO with review details if available
+			AppointmentDTO dto = new AppointmentDTO(appointment.getId(), appointment.getDoctor().getId(),
+					appointment.getUser().getName(), appointment.getDoctor().getName(),
+					appointment.getDoctor().getDepartment().getName(), appointment.getDate().toString(),
+					appointment.getSlot(), appointment.getStatus(), review.isPresent(), // ✅ Mark if a review exists
+					review.map(Review::getRating).orElse(null), // ✅ Get rating if exists
+					review.map(Review::getComments).orElse(null) // ✅ Get comment if exists
+			);
+
+			appointmentDTOs.add(dto);
 		}
 
-		return appointments.stream().map(appointment -> {
-			boolean reviewExists = reviewRepository.existsByAppointmentId(appointment.getId());
-
-			return new AppointmentDTO(appointment.getDoctor().getId(), appointment.getUser().getName(),
-					appointment.getDoctor().getName(), appointment.getDoctor().getDepartment().getName(),
-					appointment.getDate(), appointment.getSlot(), appointment.getStatus(), reviewExists);
-		}).collect(Collectors.toList());
-
+		return appointmentDTOs;
 	}
+
+//	@Override
+//	public List<AppointmentDTO> getUserAppointments(Integer userId) {
+//		List<Appointment> appointments = appointmentRepository.findByUserId(userId);
+//
+//		if (appointments.isEmpty()) {
+//			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No appointments found");
+//		}
+//
+//		return appointments.stream().map(appointment -> {
+//			boolean reviewExists = reviewRepository.existsByAppointmentId(appointment.getId());
+//
+//			return new AppointmentDTO(appointment.getId(), appointment.getDoctor().getId(),
+//					appointment.getUser().getName(), appointment.getDoctor().getName(),
+//					appointment.getDoctor().getDepartment().getName(), appointment.getDate(), appointment.getSlot(),
+//					appointment.getStatus(), reviewExists);
+//		}).collect(Collectors.toList());
+//
+//	}
 
 //	@Override
 //	public List<String> getBookedSlotsForDoctor(int doctorId, Date date) {

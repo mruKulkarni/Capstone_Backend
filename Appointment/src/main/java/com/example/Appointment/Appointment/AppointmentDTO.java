@@ -1,6 +1,7 @@
 package com.example.Appointment.Appointment;
 
 public class AppointmentDTO {
+	private Integer appointmentId;
 	private Integer doctorId;
 	private String userName;
 	private String doctorName;
@@ -9,9 +10,12 @@ public class AppointmentDTO {
 	private String slot;
 	private String status;
 	private boolean reviewSubmitted;
+	private Integer rating; // New: Include rating if review exists
+	private String comment; // New: Include comment if review exists
 
-	public AppointmentDTO(Integer doctorId, String userName, String doctorName, String department, String date,
-			String slot, String status, Boolean reviewSubmitted) {
+	public AppointmentDTO(Integer appointmentId, Integer doctorId, String userName, String doctorName,
+			String department, String date, String slot, String status, Boolean reviewSubmitted) {
+		this.appointmentId = appointmentId;
 		this.doctorId = doctorId;
 		this.userName = userName;
 		this.doctorName = doctorName;
@@ -20,6 +24,46 @@ public class AppointmentDTO {
 		this.slot = slot;
 		this.status = status;
 		this.reviewSubmitted = reviewSubmitted;
+	}
+
+	public AppointmentDTO(Integer appointmentId, Integer doctorId, String userName, String doctorName,
+			String department, String date, String slot, String status, Boolean reviewSubmitted, Integer rating,
+			String comment) {
+		this.appointmentId = appointmentId;
+		this.doctorId = doctorId;
+		this.userName = userName;
+		this.doctorName = doctorName;
+		this.department = department;
+		this.date = date;
+		this.slot = slot;
+		this.status = status;
+		this.reviewSubmitted = reviewSubmitted;
+		this.rating = rating;
+		this.comment = comment;
+	}
+
+	public Integer getRating() {
+		return rating;
+	}
+
+	public void setRating(Integer rating) {
+		this.rating = rating;
+	}
+
+	public String getComment() {
+		return comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+
+	public Integer getAppointmentId() {
+		return appointmentId;
+	}
+
+	public void setAppointmentId(Integer appointmentId) {
+		this.appointmentId = appointmentId;
 	}
 
 	public AppointmentDTO(Integer doctorId, String userName, String doctorName, String department, String date,
