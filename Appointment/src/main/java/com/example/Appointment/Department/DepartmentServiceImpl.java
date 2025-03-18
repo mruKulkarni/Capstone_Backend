@@ -14,7 +14,7 @@ public class DepartmentServiceImpl implements DepartmentService {
 	
 	@Override
 	public Collection<Department> getAllDepartments() {
-		return this.departmentRepository.findAll();
+		return this.departmentRepository.findAllWithDoctors();
 	}
 
 	@Override
@@ -26,6 +26,11 @@ public class DepartmentServiceImpl implements DepartmentService {
 	@Override
 	public Optional<Department> getDepartmentById(int id) {
 		 return departmentRepository.findById(id);
+	}
+
+	@Override
+	public Collection<Department> getDepartmentsWithActiveDoctors() {
+		return departmentRepository.findDepartmentsWithActiveDoctors();
 	}
 
 }

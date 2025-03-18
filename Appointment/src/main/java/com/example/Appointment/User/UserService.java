@@ -13,6 +13,7 @@ public interface UserService {
 //	User updateUser(User updatedUser, String email);
 	
 	public Integer getUserIdByEmail(String email) ;
+	public User updateUser(User updatedUser, String email);
 	
 
 }
