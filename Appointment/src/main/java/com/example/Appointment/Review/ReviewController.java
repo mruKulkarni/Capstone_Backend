@@ -1,6 +1,8 @@
 package com.example.Appointment.Review;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -39,9 +41,14 @@ public class ReviewController {
 //	}
 
 	@PostMapping("/submit")
-	public ResponseEntity<String> submitReview(@RequestBody ReviewDTO reviewDTO) {
+	public ResponseEntity<Map<String, String>> submitReview(@RequestBody ReviewDTO reviewDTO) {
 		reviewService.submitReview(reviewDTO);
-		return ResponseEntity.ok("Review submitted successfully");
+
+		// ✅ Return a JSON response instead of plain text
+		Map<String, String> response = new HashMap<>();
+		response.put("message", "Review submitted successfully");
+
+		return ResponseEntity.ok(response); // ✅ This is now valid JSON
 	}
 
 	@GetMapping("/user/{userId}")
