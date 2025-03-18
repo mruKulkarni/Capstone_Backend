@@ -193,7 +193,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 					appointment.getDoctor().getDepartment().getName(), appointment.getDate(), // You may want to format
 																								// or adjust the date as
 																								// needed
-					appointment.getSlot(), appointment.getStatus());
+					appointment.getSlot(), appointment.getStatus(),appointment.getId());
 			appointmentDTOs.add(dto);
 		}
 
@@ -217,6 +217,15 @@ public class AppointmentServiceImpl implements AppointmentService {
 		}).collect(Collectors.toList());
 
 	}
+
+	@Override
+	public Appointment findById(Integer id) {
+        return appointmentRepository.findById(id).orElse(null);  // Return null if not found
+    }
+	@Override
+	public void save(Appointment appointment) {
+        appointmentRepository.save(appointment);  // Save or update the appointment
+    }
 
 //	@Override
 //	public List<String> getBookedSlotsForDoctor(int doctorId, Date date) {
