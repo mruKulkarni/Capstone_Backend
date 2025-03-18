@@ -23,4 +23,8 @@ public interface AppointmentService {
 
 	List<AppointmentDTO> getUserAppointments(Integer userId);
 
+	Appointment findById(Integer id);
+
+	void save(Appointment appointment);
+
 }

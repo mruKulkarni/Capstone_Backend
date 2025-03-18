@@ -1,6 +1,7 @@
 package com.example.Appointment.Appointment;
 
 public class AppointmentManageDTO {
+	private Integer appointmentId;
 	private Integer doctorId;
 	private String userName;
 	private String doctorName;
@@ -12,7 +13,7 @@ public class AppointmentManageDTO {
 		super();
 	}
 	public AppointmentManageDTO(Integer doctorId, String userName, String doctorName, String department, String date,
-			String slot, String status) {
+			String slot, String status,Integer appointmentId ) {
 		super();
 		this.doctorId = doctorId;
 		this.userName = userName;
@@ -21,6 +22,13 @@ public class AppointmentManageDTO {
 		this.date = date;
 		this.slot = slot;
 		this.status = status;
+		this.appointmentId= appointmentId;
+	}
+	public Integer getAppointmentId() {
+		return appointmentId;
+	}
+	public void setAppointmentId(Integer appointmentId) {
+		this.appointmentId = appointmentId;
 	}
 	public Integer getDoctorId() {
 		return doctorId;
