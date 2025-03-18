@@ -66,9 +66,6 @@ public class UserServiceImpl implements UserService {
         if (updatedUser.getName() != null) {
 			existingUser.setName(updatedUser.getName());
 		}
-        if (updatedUser.getAge() != 0) {
-			existingUser.setAge(updatedUser.getAge());
-		}
         if (updatedUser.getPhone() != null) {
 			existingUser.setPhone(updatedUser.getPhone());
 		}
