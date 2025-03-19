@@ -48,7 +48,6 @@ public class Review {
 
 	public Review() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Review(Integer id, Integer rating, String comments, Doctor doctor, User user) {
