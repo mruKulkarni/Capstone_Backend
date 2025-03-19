@@ -14,4 +14,6 @@ public interface ReviewService {
 	List<ReviewDTO> getReviewsByUser(Integer userId);
 
 	List<ReviewDTO> getReviewsByDoctor(Integer doctorId);
+	
+	public List<DoctorReviewDTO> getReviewByDoctor(Integer doctorId);
 }

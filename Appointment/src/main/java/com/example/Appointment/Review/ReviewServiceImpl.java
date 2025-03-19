@@ -29,10 +29,12 @@ public class ReviewServiceImpl implements ReviewService {
 	@Autowired
 	private UserRepository userRepository;
 
+	@Override
 	public Appointment getLatestAppointment(Integer userId) {
 		return appointmentRepository.findTopByUserIdOrderByIdDesc(userId);
 	}
 
+	@Override
 	public Review submitReview(Integer userId, Integer doctorId, Integer rating, String comments) {
 		Doctor doctor = new Doctor();
 		doctor.setId(doctorId);
@@ -44,6 +46,7 @@ public class ReviewServiceImpl implements ReviewService {
 		return reviewRepository.save(review);
 	}
 
+	@Override
 	public void submitReview(ReviewDTO reviewDTO) {
 		// ✅ Validate appointment
 		Appointment appointment = appointmentRepository.findById(reviewDTO.getAppointmentId())
@@ -108,5 +111,17 @@ public class ReviewServiceImpl implements ReviewService {
 						review.getComments()))
 				.collect(Collectors.toList());
 
+	}
+	
+	@Override
+	public List<DoctorReviewDTO> getReviewByDoctor(Integer doctorId) {
+	    List<Review> reviews = reviewRepository.findByDoctorId(doctorId);
+	    return reviews.stream()
+	            .map(review -> new DoctorReviewDTO(
+	                review.getRating(),
+	                review.getComments(),
+	                review.getUser().getName() // ✅ Fetch reviewer’s name
+	            ))
+	            .collect(Collectors.toList());
 	}
 }
