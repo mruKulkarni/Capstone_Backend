@@ -75,6 +75,18 @@ public class ReviewServiceImpl implements ReviewService {
 		review.setComments(reviewDTO.getComments());
 
 		reviewRepository.save(review);
+
+		updateDoctorRating(reviewDTO.getDoctorId());
+	}
+
+	private void updateDoctorRating(Integer doctorId) {
+		List<Review> reviews = reviewRepository.findByDoctorId(doctorId);
+		if (!reviews.isEmpty()) {
+			double averageRating = reviews.stream().mapToInt(Review::getRating).average().orElse(5.0);
+			Doctor doctor = doctorRepository.findById(doctorId).orElseThrow();
+			doctor.setAverageRating(averageRating);
+			doctorRepository.save(doctor); // Save updated rating
+		}
 	}
 
 	@Override
