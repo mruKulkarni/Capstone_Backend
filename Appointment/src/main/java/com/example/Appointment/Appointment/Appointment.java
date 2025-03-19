@@ -39,7 +39,6 @@ public class Appointment {
 
 	public Appointment() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Appointment(Integer id, String slot, String status, Date date, Doctor doctor, User user) {
@@ -77,12 +76,12 @@ public class Appointment {
 	}
 
 	public String getDate() {
-        return (date != null) ? date.toString() : null; // ✅ Convert SQL Date to String
-    }
+		return (date != null) ? date.toString() : null; // ✅ Convert SQL Date to String
+	}
 
-    public void setDate(Date date) {
-        this.date = date;
-    }
+	public void setDate(Date date) {
+		this.date = date;
+	}
 
 	public Doctor getDoctor() {
 		return doctor;

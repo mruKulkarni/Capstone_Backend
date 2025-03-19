@@ -7,6 +7,15 @@ public class DoctorDTO {
 	private Double averageRating;
 	private Integer departmentId;
 
+	public DoctorDTO(String doctorCode, String name, String qualification, Double averageRating, Integer departmentId) {
+		super();
+		this.doctorCode = doctorCode;
+		this.name = name;
+		this.qualification = qualification;
+		this.averageRating = averageRating;
+		this.departmentId = departmentId;
+	}
+
 	public String getDoctorCode() {
 		return doctorCode;
 	}

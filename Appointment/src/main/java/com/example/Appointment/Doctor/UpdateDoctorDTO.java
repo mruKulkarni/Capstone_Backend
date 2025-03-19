@@ -9,6 +9,12 @@ public class UpdateDoctorDTO {
 		return name;
 	}
 
+	public UpdateDoctorDTO(String name, String qualification) {
+		super();
+		this.name = name;
+		this.qualification = qualification;
+	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
