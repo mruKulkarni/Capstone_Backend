@@ -58,4 +58,14 @@ public class DoctorServiceImpl implements DoctorService {
 		return false;
 	}
 
+	@Override
+	public Doctor updateDoctor(Integer id, UpdateDoctorDTO updateDoctorDTO) {
+		Doctor doctor = doctorRepository.findById(id).orElseThrow(() -> new RuntimeException("Doctor not found"));
+
+		doctor.setName(updateDoctorDTO.getName());
+		doctor.setQualification(updateDoctorDTO.getQualification());
+
+		return doctorRepository.save(doctor);
+	}
+
 }
