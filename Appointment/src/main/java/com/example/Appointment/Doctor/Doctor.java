@@ -105,6 +105,10 @@ public class Doctor {
 		this.averageRating = averageRating;
 	}
 
+	public void setAverageRating() {
+		this.averageRating = 5.0;
+	}
+
 	public List<Review> getReviews() {
 		return reviews;
 	}
