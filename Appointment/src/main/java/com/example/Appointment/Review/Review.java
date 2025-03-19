@@ -5,6 +5,7 @@ import com.example.Appointment.Doctor.Doctor;
 import com.example.Appointment.User.User;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -20,6 +21,7 @@ public class Review {
 	@GeneratedValue
 	private Integer id;
 	private Integer rating;
+	@Column(columnDefinition = "TEXT")
 	private String comments;
 
 	@ManyToOne
