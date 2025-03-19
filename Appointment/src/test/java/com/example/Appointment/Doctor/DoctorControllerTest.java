@@ -1,4 +1,4 @@
-package com.example.Appointment.Controller;
+package com.example.Appointment.Doctor;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
